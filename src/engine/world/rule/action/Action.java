@@ -1,2 +1,4 @@
-package engine.world.rule.action;public class Action {
+package engine.world.rule.action;
+
+public abstract class Action {
 }

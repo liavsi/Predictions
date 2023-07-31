@@ -1,2 +1,4 @@
-package engine.world.rule.action;public class ActionExpression {
+package engine.world.rule.action;
+
+public class ActionExpression {
 }

@@ -1,2 +1,4 @@
-package engine.world.property;public class Restriction {
+package engine.world.property;
+
+public class Restriction {
 }
