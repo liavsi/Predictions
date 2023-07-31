@@ -1,31 +1,32 @@
 package engine.world.property;
 
 public enum Type {
-    INT {
+    DECIMAL {
         @Override
         public String toString() {
-            return "Int";
+            return "decimal";
         }
     },
     FLOAT {
         @Override
         public String toString() {
-            return "Double";
+            return "float";
         }
     },
     BOOLEAN {
         @Override
         public String toString() {
-            return "Boolean";
+            return "boolean";
         }
     },
     STRING {
         @Override
         public String toString() {
-            return "String";
+            return "string";
         }
     };
 
     public abstract String toString();
+
 
 }
