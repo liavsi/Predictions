@@ -5,8 +5,12 @@ import java.util.List;
 public class Property {
 
     private String name;
-    private Class type;
+    private Type type;
     private List<Restriction> restrictions;
-    private boolean isRandomInitialized;
+    private Boolean isRandomInitialized = false; //default value
 
+    @Override
+    public String toString() {
+        return "\nName: " + name + "\nType: " + type.toString() + "\nRestrictions: " +  restrictions.toString() + "\n Is Random Initialized: " + isRandomInitialized.toString();
+    }
 }
