@@ -1,8 +1,8 @@
 package engine.world.rule.Condition;
 
-public class ConditionTicks implements Condition{
+public class ConditionTicks implements ConditionEnd{
 
-    private int ticksToEnd;
+    private final int ticksToEnd;
     private int ticksPass;
 
     public ConditionTicks(int numOfTicks){
@@ -11,7 +11,12 @@ public class ConditionTicks implements Condition{
     }
     @Override
     public boolean isConditionTrue() {
+
         return (ticksPass - ticksToEnd >= 0);
+    }
+    @Override
+    public void updateConditionVars(){
+        ticksPass += 1;
     }
 
 

@@ -1,6 +1,6 @@
 package engine.world.rule.Condition;
 
-public class ConditionTimeout implements Condition{
+public class ConditionTimeout implements ConditionEnd{
 
     private final int secondsToEnd;
     private long realTime;
@@ -14,9 +14,12 @@ public class ConditionTimeout implements Condition{
     }
     @Override
     public boolean isConditionTrue() {
+
         return (realTime - startTime > secondsToEnd);
     }
-    public void updateRealTime() {
+    @Override
+    public void updateConditionVars() {
+
         realTime = System.currentTimeMillis()/1000;
     }
 }
