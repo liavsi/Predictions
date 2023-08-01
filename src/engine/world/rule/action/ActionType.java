@@ -2,29 +2,37 @@ package engine.world.rule.action;
 
 import engine.world.entity.Entity;
 
-public enum ActionType {
+public enum ActionType implements Action{
     INCREASE{
-    },
-    DECREASE {
+        @Override
+        public void ExecuteAction() {
 
-    },
-    CALCULATION {
-
-    },
-    CONDITION {
-
-    },
-    SET {
-
-    },
-    KILL {
-
-    },
-    REPLACE{
-//         EXE 2
-    },
-    PROXIMITY {
-//        EXE 2
+        }
     };
+//    DECREASE {
+//
+//    },
+//    CALCULATION {
+//
+//    },
+//    CONDITION {
+//
+//    },
+//    SET {
+//
+//    },
+//    KILL {
+//
+//    },
+//    REPLACE{
+////         EXE 2
+//    },
+//    PROXIMITY {
+////        EXE 2
+//    };
+
+
+//    protected ActionMembers members;
+
 
 }

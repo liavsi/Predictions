@@ -14,4 +14,8 @@ public class Property {
     public String toString() {
         return "\nName: " + name + "\nType: " + type.toString() + "\nRestrictions: " +  restrictions.toString() + "\n Is Random Initialized: " + isRandomInitialized.toString();
     }
+
+    public String getName() {
+        return name;
+    }
 }

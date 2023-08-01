@@ -3,7 +3,7 @@ package engine.world.rule.action;
 import engine.world.property.Property;
 import engine.world.utils.Expression;
 
-public class ActionDecrease extends Action{
+public class ActionDemoDecrease extends ActionDemo {
     private Property property;
     private Expression by;
 
