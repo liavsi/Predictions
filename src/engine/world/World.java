@@ -9,10 +9,9 @@ import engine.world.utils.Expression;
 import java.util.Collection;
 
 public class World implements EnvironmentWorld {
-    private Collection<Entity> entities;
-    private Collection<Rule> rules;
-    private Collection<Property> environmentVars;
-
+    Collection<Entity> entities;
+    Collection<Rule> rules;
+    Collection<Property> environmentVars;
 
     @Override
     public String toString() {
