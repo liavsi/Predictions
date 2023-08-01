@@ -4,10 +4,11 @@ import engine.SimulationOutcome;
 import engine.world.entity.Entity;
 import engine.world.property.Property;
 import engine.world.rule.Rule;
+import engine.world.utils.Expression;
 
 import java.util.Collection;
 
-public class World implements HasProperties {
+public class World implements EnvironmentWorld {
     Collection<Entity> entities;
     Collection<Rule> rules;
     Collection<Property> environmentVars;
@@ -18,8 +19,12 @@ public class World implements HasProperties {
                 +"\nEnvironment Variables: " +environmentVars.toString();
     }
 
-    public Property getPropertyByName(String propertyName) {
+    public Property getEnvironmentVarByName(Expression envName) {
         Property resultProperty = null;
+        String propertyName = (String) envName.evaluate();
+        if(propertyName == null) {
+            throw new RuntimeException("Not a valid string");
+        }
         for (Property environmentVar : environmentVars) {
             if (environmentVar.getName() == propertyName) {
                 resultProperty = environmentVar;
