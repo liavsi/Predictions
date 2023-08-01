@@ -1,7 +1,6 @@
 package engine.world.utils;
 
-public abstract class Expression {
-    private String expressionText;
+public interface Expression {
 
-    public abstract void evaluation();
+    public Object evaluate();
 }
