@@ -1,7 +1,6 @@
 package engine.world.utils;
 
-import engine.world.EnvironmentWorld;
-import engine.world.World;
+import engine.world.HasProperties;
 import engine.world.property.Property;
 
 import java.util.Random;
@@ -11,7 +10,17 @@ public enum EnvironmentFunction implements Expression {
     ENVIRONMENT{
         @Override
         public Property evaluate() {
-            return myWorld.getEnvironmentVarByName(argument);
+            Property environmentVariable = null;
+            if (argument instanceof PropertyExpression) {
+                // TODO: 01/08/2023
+                // have to check if this is the right way to write this type of code
+                PropertyExpression propertyExpression = (PropertyExpression)argument;
+                environmentVariable =  myWorld.getPropertyByName(propertyExpression.evaluate());
+            }
+            else {
+                throw new RuntimeException("not Property Expression delivered");
+            }
+            return environmentVariable;
         }
     },
     RANDOM{
@@ -31,7 +40,7 @@ public enum EnvironmentFunction implements Expression {
     };
 
     protected Expression argument;
-    protected EnvironmentWorld myWorld;
+    protected HasProperties myWorld;
     // EVALUATE{},
     // PRECENT{},
     // TICKS{};
