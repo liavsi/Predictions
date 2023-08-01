@@ -6,6 +6,7 @@ public class Property {
 
     private String name;
     private Type type;
+//    private T value;
     private List<Restriction> restrictions;
     private Boolean isRandomInitialized = false; //default value
 
