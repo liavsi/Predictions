@@ -1,12 +1,17 @@
 package engine.world.rule.action;
 
-import engine.world.entity.Entity;
+import engine.world.HasProperties;
+import engine.world.property.Property;
+import engine.world.utils.NumericExpression;
+
+import java.util.Map;
 
 public enum ActionType implements Action{
     INCREASE{
         @Override
         public void ExecuteAction() {
-
+            Float by = new NumericExpression(arguments.get("by")).evaluate();
+            Property property = mainEntity.getPropertyByName(arguments.get("property"));
         }
     };
 //    DECREASE {
@@ -32,7 +37,8 @@ public enum ActionType implements Action{
 //    };
 
 
-//    protected ActionMembers members;
+    protected HasProperties mainEntity;
+    protected Map<String, String> arguments;
 
 
 }
