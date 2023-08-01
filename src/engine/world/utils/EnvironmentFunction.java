@@ -12,8 +12,7 @@ public enum EnvironmentFunction implements Expression {
         public Property evaluate() {
             Property environmentVariable = null;
             if (argument instanceof PropertyExpression) {
-                // TODO: 01/08/2023
-                // have to check if this is the right way to write this type of code
+                // TODO: 01/08/2023 have to check if this is the right way to write this type of code
                 PropertyExpression propertyExpression = (PropertyExpression)argument;
                 environmentVariable =  myWorld.getPropertyByName(propertyExpression.evaluate());
             }
@@ -26,15 +25,16 @@ public enum EnvironmentFunction implements Expression {
     RANDOM{
         @Override
         public Integer evaluate() {
-            // we would like to make a random number from 0 to this argument number - assuming it's a decimal Expression
-
-            Integer maxRangeNumber  = (Integer) argument.evaluate();
+            Integer maxRangeNumber = null;
+            if (argument instanceof NumericExpression) {
+                maxRangeNumber  = (Integer) argument.evaluate();
+            }
             if(maxRangeNumber == null) {
                 throw new RuntimeException("Not a valid Number to Random Function");
             }
             Random random = new Random();
 
-            // Generate a random number between 0 (inclusive) and maxRange (exclusive)
+            // Generate a random number between 0 and maxRange
             return  random.nextInt(maxRangeNumber);
         }
     };
