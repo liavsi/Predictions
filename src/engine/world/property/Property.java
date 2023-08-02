@@ -6,9 +6,7 @@ public class Property {
 
     private String name;
     private Type type;
-
-    // TODO: 01/08/2023 need to add Value to the property class
-    private List<Restriction> restrictions;
+    private Restriction restrictions;
     private Boolean isRandomInitialized = false; //default value
 
     @Override

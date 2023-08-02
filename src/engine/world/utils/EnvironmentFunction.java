@@ -29,7 +29,7 @@ public enum EnvironmentFunction implements Expression {
             if (argument instanceof NumericExpression) {
                 maxRangeNumber  = (Integer) argument.evaluate();
             }
-            if(maxRangeNumber == null) {
+            else {
                 throw new RuntimeException("Not a valid Number to Random Function");
             }
             Random random = new Random();
