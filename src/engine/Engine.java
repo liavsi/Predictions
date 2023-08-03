@@ -1,6 +1,7 @@
 package engine;
 
 import engine.world.World;
+import schema.generated.PRDWorld;
 
 import java.util.List;
 
@@ -17,5 +18,9 @@ public class Engine {
         SimulationOutcome currSimulation = myWorld.runSimulation();
         pastSimulations.add(currSimulation);
         return currSimulation;
+    }
+
+    public void loadWorldFromGeneratedWorld(PRDWorld prdWorld) {
+        myWorld.buildWorldFromGeneratedWorld(prdWorld);
     }
 }
