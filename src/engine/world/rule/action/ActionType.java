@@ -2,13 +2,11 @@ package engine.world.rule.action;
 
 import engine.world.HasProperties;
 import engine.world.property.ActualProperty;
-import engine.world.property.Property;
 import engine.world.utils.NumericExpression;
 
-import java.util.List;
 import java.util.Map;
 
-public enum ActionType implements Action{
+public enum ActionType implements Actionable {
     INCREASE{
         @Override
         public void ExecuteAction(Map<String,String> arguments, HasProperties mainEntity) {

@@ -1,17 +1,19 @@
 package engine.world.property;
 
-import java.util.List;
+import schema.generated.PRDProperty;
+import schema.generated.PRDRange;
+import schema.generated.PRDValue;
 
-public class Property {
+public abstract class Property {
 
-    private String name;
-    private Type type;
-    private Restriction restrictions;
-    private Boolean isRandomInitialized = false; //default value
+    protected String name;
+    protected Type type;
+    protected Restriction restrictions;
+    // TODO: 03/08/2023 constructor(?) 
 
     @Override
     public String toString() {
-        return "\nName: " + name + "\nType: " + type.toString() + "\nRestrictions: " +  restrictions.toString() + "\n Is Random Initialized: " + isRandomInitialized.toString();
+        return "\nName: " + name + "\nType: " + type.toString() + "\nRestrictions: " +  restrictions.toString();
     }
 
     public String getName() {
