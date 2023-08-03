@@ -8,7 +8,7 @@ public class Entity {
 
     private String name;
     private int quantityInPopulation;
-    private Set<Property> properties;
+    private Set<Property> properties; //ToDo change to map
 
     @Override
     public String toString() {

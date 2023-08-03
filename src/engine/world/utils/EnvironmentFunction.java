@@ -1,6 +1,7 @@
 package engine.world.utils;
 
 import engine.world.HasProperties;
+import engine.world.property.ActualProperty;
 import engine.world.property.Property;
 
 import java.util.Random;
@@ -9,8 +10,8 @@ public enum EnvironmentFunction implements Expression {
 
     ENVIRONMENT{
         @Override
-        public Property evaluate() {
-            Property environmentVariable = null;
+        public ActualProperty evaluate() {
+            ActualProperty environmentVariable = null;
             if (argument instanceof PropertyExpression) {
                 // TODO: 01/08/2023 have to check if this is the right way to write this type of code
                 PropertyExpression propertyExpression = (PropertyExpression)argument;
@@ -29,7 +30,7 @@ public enum EnvironmentFunction implements Expression {
             if (argument instanceof NumericExpression) {
                 maxRangeNumber  = (Integer) argument.evaluate();
             }
-            if(maxRangeNumber == null) {
+            else {
                 throw new RuntimeException("Not a valid Number to Random Function");
             }
             Random random = new Random();

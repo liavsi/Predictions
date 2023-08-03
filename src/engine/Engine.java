@@ -7,7 +7,7 @@ import java.util.List;
 public class Engine {
     private World myWorld;
 
-    private List<SimulationOutcome> pastSimulations;
+    private List<SimulationOutcome> pastSimulations; // TODO: 03/08/2023 map? 
 
     public World getWorld() {
         return myWorld;

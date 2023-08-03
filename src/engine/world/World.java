@@ -2,14 +2,15 @@ package engine.world;
 
 import engine.SimulationOutcome;
 import engine.world.entity.Entity;
+import engine.world.property.ActualProperty;
 import engine.world.property.Property;
 import engine.world.rule.Rule;
 import engine.world.utils.Expression;
 
 import java.util.Collection;
 
-public class World implements EnvironmentWorld {
-    Collection<Entity> entities;
+public class World implements HasProperties {
+    Collection<Entity> entities;// TODO: 03/08/2023 map?
     Collection<Rule> rules;
     Collection<Property> environmentVars;
 
@@ -19,7 +20,13 @@ public class World implements EnvironmentWorld {
                 +"\nEnvironment Variables: " +environmentVars.toString();
     }
 
-    public Property getEnvironmentVarByName(Expression envName) {
+    @Override
+    public ActualProperty getPropertyByName(String propertyName) {
+        // TODO: 02/08/2023 change to actual property
+        return null;
+    }
+
+    Property getEnvironmentVarByName(Expression envName) {
         Property resultProperty = null;
         String propertyName = (String) envName.evaluate();
         if(propertyName == null) {
@@ -38,5 +45,5 @@ public class World implements EnvironmentWorld {
 
     public SimulationOutcome runSimulation() {
         return new SimulationOutcome();
-    }
+    } // TODO: 03/08/2023
 }
