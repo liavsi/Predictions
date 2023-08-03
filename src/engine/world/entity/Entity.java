@@ -35,7 +35,7 @@ public class Entity {
 
     public Property getPropertyByName(String propertyName) {
         Property resultProperty = null;
-        for (Property environmentVar : properties) {
+        for (Property environmentVar : properties.values()) {
             if (environmentVar.getName() == propertyName) {
                 resultProperty = environmentVar;
             }
