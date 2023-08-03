@@ -1,19 +1,17 @@
 package engine.world.entity;
 
-import engine.world.property.Property;
+import engine.world.property.EntityProperty;
 import schema.generated.PRDEntity;
-import schema.generated.PRDProperties;
 import schema.generated.PRDProperty;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class Entity {
 
     private String name;
     private int quantityInPopulation;
-    private Map<String,Property> properties;
+    private Map<String, EntityProperty> properties;
 
     public static Entity createInstanceFromPRD(PRDEntity prdEntity) {
         Entity newEntity = new Entity();
@@ -21,7 +19,7 @@ public class Entity {
         newEntity.name = prdEntity.getName();
         newEntity.quantityInPopulation = prdEntity.getPRDPopulation();
         for (PRDProperty prdProperty:prdEntity.getPRDProperties().getPRDProperty()){
-            Property newProperty = Property.createPropertyFromPRD(prdProperty);
+            EntityProperty newProperty = EntityProperty.createPropertyFromPRD(prdProperty);
             String newPropertyName = prdProperty.getPRDName();
             newEntity.properties.put(newPropertyName,newProperty);
         }
@@ -33,9 +31,9 @@ public class Entity {
         return "\nName: " + name + "\nQuantity in population: " + quantityInPopulation + "\n Properties: " + properties.toString();
     }
 
-    public Property getPropertyByName(String propertyName) {
-        Property resultProperty = null;
-        for (Property environmentVar : properties.values()) {
+    public EntityProperty getPropertyByName(String propertyName) {
+        EntityProperty resultProperty = null;
+        for (EntityProperty environmentVar : properties.values()) {
             if (environmentVar.getName() == propertyName) {
                 resultProperty = environmentVar;
             }

@@ -2,7 +2,6 @@ package engine.world.utils;
 
 import engine.world.HasProperties;
 import engine.world.property.ActualProperty;
-import engine.world.property.Property;
 
 import java.util.Random;
 

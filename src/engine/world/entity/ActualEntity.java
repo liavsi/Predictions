@@ -2,10 +2,8 @@ package engine.world.entity;
 
 import engine.world.HasProperties;
 import engine.world.property.ActualProperty;
-import engine.world.property.Property;
 
 import java.util.Set;
-import java.util.function.ToDoubleBiFunction;
 
 public class ActualEntity implements HasProperties {
 
