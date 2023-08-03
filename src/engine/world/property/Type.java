@@ -28,5 +28,4 @@ public enum Type {
 
     public abstract String toString();
 
-
 }

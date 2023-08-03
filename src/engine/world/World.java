@@ -10,7 +10,7 @@ import engine.world.utils.Expression;
 import java.util.Collection;
 
 public class World implements HasProperties {
-    Collection<Entity> entities;
+    Collection<Entity> entities;// TODO: 03/08/2023 map?
     Collection<Rule> rules;
     Collection<Property> environmentVars;
 
@@ -45,5 +45,5 @@ public class World implements HasProperties {
 
     public SimulationOutcome runSimulation() {
         return new SimulationOutcome();
-    }
+    } // TODO: 03/08/2023
 }

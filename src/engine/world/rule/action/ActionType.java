@@ -11,19 +11,20 @@ import java.util.Map;
 public enum ActionType implements Action{
     INCREASE{
         @Override
-        public void ExecuteAction(Map<String,String> arguments) {
+        public void ExecuteAction(Map<String,String> arguments, HasProperties mainEntity) {
+            Float by = new NumericExpression(arguments.get("by")).evaluate(); //To check if numeric expression
+            ActualProperty property = mainEntity.getPropertyByName(arguments.get("property"));
+            property.increaseValue(by);
+        }
+    },
+    DECREASE {
+        @Override
+        public void ExecuteAction(Map<String,String> arguments,HasProperties mainEntity) {
             Float by = new NumericExpression(arguments.get("by")).evaluate();
             ActualProperty property = mainEntity.getPropertyByName(arguments.get("property"));
-//            property.increaseValue(by);
+            property.decreaseValue(by);
         }
     };
-//    DECREASE {
-//        @Override
-//        public void ExecuteAction(Map<String,String> arguments) {
-//            Float by = new NumericExpression(arguments.get("by")).evaluate();
-//            Property property = mainEntity.getPropertyByName(arguments.get("property"));
-//        }
-//    },
 //    CALCULATION {
 //
 //    },
@@ -43,10 +44,5 @@ public enum ActionType implements Action{
 ////        EXE 2
 //    };
 
-
-    protected HasProperties mainEntity;
-    protected Map<String, String> arguments;
-
-
-    public abstract void ExecuteAction(Map<String, String> arguments);
+    public abstract void ExecuteAction(Map<String, String> arguments, HasProperties mainEntity);
 }
