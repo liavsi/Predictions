@@ -1,7 +1,5 @@
 package engine;
 
-import engine.world.World;
-import engine.world.entity.Entity;
 import schema.generated.PRDWorld;
 
 import javax.xml.bind.JAXBContext;
@@ -19,8 +17,8 @@ public class TemporaryInterface {
         Engine currEngine = new Engine();
         try {
             InputStream inputStream = new FileInputStream(new File(XML_FILE_PATH));
-            PRDWorld generatedWorld = deserializedFrom(inputStream);
-            currEngine.loadWorldFromGeneratedWorld(generatedWorld);
+            PRDWorld prdWorld = deserializedFrom(inputStream);
+            currEngine.loadWorldFromPRDWorld(prdWorld);
             System.out.println(currEngine.getWorld());
         }catch(JAXBException | FileNotFoundException e){
             e.printStackTrace();

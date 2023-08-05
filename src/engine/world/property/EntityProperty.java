@@ -5,7 +5,7 @@ import schema.generated.PRDRange;
 import schema.generated.PRDValue;
 
 public class EntityProperty extends Property{
-    private RandomInitializer randomInitializer;
+    protected RandomInitializer randomInitializer;
 
     public static EntityProperty createPropertyFromPRD(PRDProperty prdProperty) {
         EntityProperty newProperty = new EntityProperty();

@@ -5,6 +5,16 @@ public class ActualProperty {
     private EntityProperty propertyDetails;
     private Object value;
 
+    public ActualProperty(EntityProperty propertyDetails) {
+        this.propertyDetails = propertyDetails;
+        if(propertyDetails.randomInitializer.getIsRandomInitialized()) {
+            value = propertyDetails.type.randomValue(propertyDetails.restrictions);
+        }
+        else{
+            value = propertyDetails.randomInitializer.getInitValue();
+        }
+    }
+
     public String getName() {
         return propertyDetails.getName();
     }

@@ -9,4 +9,12 @@ public class Restriction {
         this.from = (float) from;
         this.to = (float) to;
     }
+
+    public float getFrom(){
+        return from;
+    }
+
+    public float getTo() {
+        return to;
+    }
 }

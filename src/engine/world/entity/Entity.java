@@ -43,4 +43,7 @@ public class Entity {
         }
         return resultProperty;
     }
+    public String getName(){
+        return name;
+    }
 }
