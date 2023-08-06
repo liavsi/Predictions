@@ -7,11 +7,11 @@ public class ActualProperty {
 
     public ActualProperty(EntityProperty propertyDetails) {
         this.propertyDetails = propertyDetails;
-        if(propertyDetails.randomInitializer.getIsRandomInitialized()) {
+        if(propertyDetails.getRandomInitializer().getIsRandomInitialized()) {
             value = propertyDetails.type.randomValue(propertyDetails.restrictions);
         }
         else{
-            value = propertyDetails.randomInitializer.getInitValue();
+            value = propertyDetails.getRandomInitializer().getInitValue();
         }
     }
 

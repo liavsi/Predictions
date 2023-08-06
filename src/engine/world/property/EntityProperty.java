@@ -5,7 +5,7 @@ import schema.generated.PRDRange;
 import schema.generated.PRDValue;
 
 public class EntityProperty extends Property{
-    protected RandomInitializer randomInitializer;
+    private RandomInitializer randomInitializer;
 
     public static EntityProperty createPropertyFromPRD(PRDProperty prdProperty) {
         EntityProperty newProperty = new EntityProperty();
@@ -16,6 +16,10 @@ public class EntityProperty extends Property{
         PRDValue prdValue = prdProperty.getPRDValue();
         newProperty.randomInitializer = new RandomInitializer(prdValue.isRandomInitialize(),prdValue.getInit());
         return newProperty;
+    }
+
+    public RandomInitializer getRandomInitializer() {
+        return randomInitializer;
     }
 
     @Override

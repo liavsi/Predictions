@@ -47,9 +47,12 @@ public class World implements HasProperties {
             throw new RuntimeException("Not a valid string");
         }
         for (EnvironmentProperty environmentVar : environmentVars.values()){
-            if (resultProperty == null) {
-                throw new RuntimeException("did not find This Environment variable");
+            if (propertyName == environmentVar.getName()) {
+                resultProperty = environmentVar;
             }
+        }
+        if(resultProperty == null){
+            throw new RuntimeException("did not find This Environment variable");
         }
         return resultProperty;
     }
@@ -62,9 +65,11 @@ public class World implements HasProperties {
         buildEntitiesFromPRD(prdWorld.getPRDEntities());
         buildEnvironmentFromPRD(prdWorld.getPRDEvironment());
         buildRulesFromPRD(prdWorld.getPRDRules());
-        for (Object object:prdWorld.getPRDTermination().getPRDByTicksOrPRDBySecond()){
+        buildTerminationFromPRD(prdWorld.getPRDTermination());
+    }
 
-        }
+    private void buildTerminationFromPRD(PRDTermination prdTermination) {
+        // TODO: 06/08/2023  
     }
 
     private void buildRulesFromPRD(PRDRules prdRules) {
