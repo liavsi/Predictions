@@ -5,8 +5,10 @@ public class ActualEnvProperty {
     private EnvironmentProperty environmentProperty;
     private Object value;
 
-    public void setActualEnvProperty(EnvironmentProperty environmentProperty,Object value) {
+    public ActualEnvProperty(EnvironmentProperty environmentProperty) {
         this.environmentProperty = environmentProperty;
+    }
+    public void setActualEnvProperty(Object value) {
         if(value == null){
             value = environmentProperty.type.randomValue(environmentProperty.restrictions);
         }
