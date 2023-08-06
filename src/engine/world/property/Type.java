@@ -53,7 +53,7 @@ public enum Type {
             Random r = new Random();
             int len = r.nextInt(50 - 1 + 1) + 1;
             StringBuilder res = new StringBuilder(len);
-            String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!?,_-.()";
+            String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!?,_-.() ";
             for (int i = 0; i < len; i++) {
                 int ind = r.nextInt(chars.length());
                 char randomChar = chars.charAt(ind);

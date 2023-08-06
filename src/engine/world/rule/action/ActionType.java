@@ -2,6 +2,8 @@ package engine.world.rule.action;
 
 import engine.world.HasProperties;
 import engine.world.property.ActualProperty;
+import engine.world.utils.BaseExpression;
+import engine.world.utils.Expression;
 import engine.world.utils.NumericExpression;
 
 import java.util.Map;
@@ -10,9 +12,12 @@ public enum ActionType implements Actionable {
     INCREASE{
         @Override
         public void ExecuteAction(Map<String,String> arguments, HasProperties mainEntity) {
-            Float by = new NumericExpression(arguments.get("by")).evaluate(); //To check if numeric expression
-            ActualProperty property = mainEntity.getPropertyByName(arguments.get("property"));
-            property.increaseValue(by);
+            BaseExpression b = new BaseExpression(arguments.get("by"));
+            Expression obj = b.expressionType(mainEntity);
+            obj.evaluate();
+            //Float by = new NumericExpression(arguments.get("by")).evaluate(); //To check if numeric expression
+            //ActualProperty property = mainEntity.getPropertyByName(arguments.get("property"));
+            //property.increaseValue(by);
         }
     },
     DECREASE {
