@@ -19,5 +19,4 @@ public class ConditionTicks implements ConditionEnd{
         ticksPass += 1;
     }
 
-
 }

@@ -3,13 +3,11 @@ package engine.world;
 import engine.SimulationOutcome;
 import engine.world.entity.Entity;
 import engine.world.property.ActualProperty;
-import engine.world.property.EntityProperty;
 import engine.world.property.EnvironmentProperty;
 import engine.world.rule.Rule;
 import engine.world.utils.Expression;
 import schema.generated.*;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +21,18 @@ public class World implements HasProperties {
         return "Entities: " + entities.toString() + "\nRules: " +rules.toString()
                 +"\nEnvironment Variables: " +environmentVars.toString();
     }
+    public Entity getEntityByName(String entityName){
+        Entity resEntity = null;
+        for(Entity entity: entities.values()){
+            if(entity.getName() == entityName){
+                resEntity = entity;
+            }
+        }
+        if(resEntity == null){
+            throw new RuntimeException("did not find This Entity in the world");
+        }
+        return resEntity;
+    }
 
     @Override
     public ActualProperty getPropertyByName(String propertyName) {
@@ -30,19 +40,16 @@ public class World implements HasProperties {
         return null;
     }
 
-    EnvironmentProperty getEnvironmentVarByName(Expression envName) {
+    public EnvironmentProperty getEnvironmentVarByName(Expression envName) {
         EnvironmentProperty resultProperty = null;
         String propertyName = (String) envName.evaluate();
         if(propertyName == null) {
             throw new RuntimeException("Not a valid string");
         }
-        for (EnvironmentProperty environmentVar : environmentVars.values()) {
-            if (environmentVar.getName() == propertyName) {
-                resultProperty = environmentVar;
+        for (EnvironmentProperty environmentVar : environmentVars.values()){
+            if (resultProperty == null) {
+                throw new RuntimeException("did not find This Environment variable");
             }
-        }
-        if (resultProperty == null) {
-            throw new RuntimeException("did not find This Environment variable");
         }
         return resultProperty;
     }
@@ -51,17 +58,20 @@ public class World implements HasProperties {
         return new SimulationOutcome();
     } // TODO: 03/08/2023
 
-    public void buildWorldFromGeneratedWorld(PRDWorld prdWorld) {
+    public void buildWorldFromPRDWorld(PRDWorld prdWorld) {
         buildEntitiesFromPRD(prdWorld.getPRDEntities());
         buildEnvironmentFromPRD(prdWorld.getPRDEvironment());
         buildRulesFromPRD(prdWorld.getPRDRules());
+        for (Object object:prdWorld.getPRDTermination().getPRDByTicksOrPRDBySecond()){
+
+        }
     }
 
     private void buildRulesFromPRD(PRDRules prdRules) {
         rules = new HashMap<>();
         for (PRDRule prdRule: prdRules.getPRDRule()){
             String ruleName = prdRule.getName();
-            Rule rule = new Rule(prdRule);
+            Rule rule = new Rule(prdRule,this);
             rules.put(ruleName,rule);
         }
     }

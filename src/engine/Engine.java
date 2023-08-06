@@ -20,7 +20,8 @@ public class Engine {
         return currSimulation;
     }
 
-    public void loadWorldFromGeneratedWorld(PRDWorld prdWorld) {
-        myWorld.buildWorldFromGeneratedWorld(prdWorld);
+    public void loadWorldFromPRDWorld(PRDWorld prdWorld) {
+
+        myWorld.buildWorldFromPRDWorld(prdWorld);
     }
 }
