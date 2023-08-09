@@ -1,9 +1,6 @@
 package engine.world.rule.action;
 
-import engine.world.HasProperties;
-import engine.world.World;
-import engine.world.entity.Entity;
-import engine.world.property.ActualProperty;
+import engine.world.design.execution.entity.Entity;
 import schema.generated.PRDAction;
 
 import java.util.Map;

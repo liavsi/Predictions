@@ -1,6 +1,6 @@
 package engine;
 
-import engine.world.entity.Entity;
+import engine.world.design.execution.entity.Entity;
 
 import java.util.Date;
 import java.util.List;

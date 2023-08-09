@@ -1,7 +1,7 @@
 package engine.world;
 
 import engine.SimulationOutcome;
-import engine.world.entity.Entity;
+import engine.world.design.execution.entity.Entity;
 import engine.world.property.ActualProperty;
 import engine.world.property.EnvironmentProperty;
 import engine.world.rule.Rule;

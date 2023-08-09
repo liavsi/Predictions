@@ -1,16 +1,13 @@
 package engine.world.rule;
 
 import engine.world.World;
-import engine.world.entity.Entity;
+import engine.world.design.execution.entity.Entity;
 import engine.world.rule.Condition.Activation;
 import engine.world.rule.action.Action;
-import engine.world.rule.action.Actionable;
 import schema.generated.PRDAction;
-import schema.generated.PRDActions;
 import schema.generated.PRDRule;
 
 import java.util.List;
-import java.util.Map;
 
 public class Rule {
     private String name;
