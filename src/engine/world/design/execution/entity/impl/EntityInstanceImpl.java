@@ -1,4 +1,8 @@
-package engine.world.design.execution.entity.api;
+package engine.world.design.execution.entity.impl;
+
+import engine.world.design.definition.entity.api.EntityDefinition;
+import engine.world.design.execution.entity.api.EntityInstance;
+import engine.world.design.execution.property.PropertyInstance;
 
 import java.util.HashMap;
 import java.util.Map;
