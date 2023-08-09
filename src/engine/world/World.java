@@ -21,6 +21,7 @@ public class World implements HasProperties {
         return "Entities: " + entities.toString() + "\nRules: " +rules.toString()
                 +"\nEnvironment Variables: " +environmentVars.toString();
     }
+
     public Entity getEntityByName(String entityName){
         Entity resEntity = null;
         for(Entity entity: entities.values()){

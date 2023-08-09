@@ -10,7 +10,7 @@ public class ActualEnvProperty {
     }
     public void setActualEnvProperty(Object value) {
         if(value == null){
-            value = environmentProperty.type.randomValue(environmentProperty.restrictions);
+            value = environmentProperty.getType().randomValue(environmentProperty.restrictions);
         }
         else{
             this.value = value;
