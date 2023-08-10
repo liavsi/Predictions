@@ -15,8 +15,13 @@ public class WorldImpl implements World {
     private EnvVariablesManager envVariablesManager;
     private List<Rule> rules;
 
-    // TODO: 10/08/2023 List<Termination> terminationConditions;
 
+// TODO: 10/08/2023 List<Termination> terminationConditions;
+
+
+    public WorldImpl() {
+
+    }
 
     @Override
     public EntityDefinition getEntityDefinitionByName() {
@@ -31,6 +36,16 @@ public class WorldImpl implements World {
     @Override
     public SimulationOutcome runSimulation() {
         return null;
+    }
+
+    @Override
+    public void setEntities(Map<String, EntityDefinition> entities) {
+        nameToEntityDefinition = entities;
+    }
+
+    @Override
+    public void setEnvVariablesManager(EnvVariablesManager envVariablesManager) {
+        this.envVariablesManager = envVariablesManager;
     }
 
 }

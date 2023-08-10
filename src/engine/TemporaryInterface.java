@@ -1,5 +1,6 @@
 package engine;
 
+import engine.impl.EngineImpl;
 import schema.generated.PRDWorld;
 
 import javax.xml.bind.JAXBContext;
@@ -14,24 +15,14 @@ public class TemporaryInterface {
     private static final String JAXB_XML_PACKAGE_NAME = "schema.generated";
     private static final String XML_FILE_PATH = "resources/master-ex1.xml";
     public static void main(String[] args) {
-        Engine currEngine = new Engine();
-        try {
-            InputStream inputStream = new FileInputStream(new File(XML_FILE_PATH));
-            PRDWorld prdWorld = deserializedFrom(inputStream);
-            currEngine.loadWorldFromPRDWorld(prdWorld);
-            System.out.println(currEngine.getWorld());
-        }catch(JAXBException | FileNotFoundException e){
-            e.printStackTrace();
-        }
+        EngineImpl currEngine = new EngineImpl();
+        currEngine.readWorldFromXml(XML_FILE_PATH, JAXB_XML_PACKAGE_NAME);
+
         //showSimulationData(currEngine.createNewSimulation());
     }
 
     private static void showSimulationData(SimulationOutcome newSimulation) {
 
     }
-    private static PRDWorld deserializedFrom(InputStream in)throws JAXBException {
-        JAXBContext jc = JAXBContext.newInstance(JAXB_XML_PACKAGE_NAME);
-        Unmarshaller u = jc.createUnmarshaller();
-        return (PRDWorld) u.unmarshal(in);
-    }
+
 }

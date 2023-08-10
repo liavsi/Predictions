@@ -3,8 +3,7 @@ package engine.world.design.reader.api;
 import schema.generated.*;
 
 public interface Reader {
-    void readPRDWorld(PRDWorld prdWorld);
 
-
+    void readWorldFromXml(String XML_PATH, String JAXB_XML_PACKAGE_NAME);
 
 }
