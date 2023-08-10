@@ -96,25 +96,110 @@ public class ReaderImpl implements Reader {
         }
         createdWorld.setEnvVariablesManager(envVariablesManager);
     }
-    private PropertyDefinition createStringPropertyDefinition(PRDEnvProperty prdEnvProperty) {
-        String name = prdEnvProperty.getPRDName();
-        return new StringPropertyDefinition(name, ValueGeneratorFactory.createRandomString());
+    private PropertyDefinition createStringPropertyDefinition(Object i_prdProperty) {
+        PropertyDefinition res = null;
+        if( i_prdProperty instanceof PRDEnvProperty) {
+            PRDEnvProperty prdEnvProperty = (PRDEnvProperty) i_prdProperty;
+            String name = prdEnvProperty.getPRDName();
+            res = new StringPropertyDefinition(name, ValueGeneratorFactory.createRandomString());
+        }
+        else {
+            if (i_prdProperty instanceof PRDProperty) {
+                PRDProperty prdProperty = (PRDProperty) i_prdProperty;
+                PRDValue prdValue = prdProperty.getPRDValue();
+                String name = prdProperty.getPRDName();
+                if(prdValue.isRandomInitialize()) {
+                    res = new StringPropertyDefinition(name, ValueGeneratorFactory.createRandomString());
+                }
+                else {
+                    res = new StringPropertyDefinition(name, ValueGeneratorFactory.createFixed(prdValue.getInit()));
+                }
+            }
+        }
+        if(res == null) {
+            throw new IllegalArgumentException(i_prdProperty.toString() + "is not expected type");
+        }
+        return res;
+
     }
-    private PropertyDefinition createBooleanPropertyDefinition(PRDEnvProperty prdEnvProperty) {
-        String name = prdEnvProperty.getPRDName();
-        return new BooleanPropertyDefinition(name, ValueGeneratorFactory.createRandomBoolean());
+    private PropertyDefinition createBooleanPropertyDefinition(Object i_prdProperty) {
+        PropertyDefinition res = null;
+        if(i_prdProperty instanceof PRDEnvProperty) {
+            PRDEnvProperty prdEnvProperty = (PRDEnvProperty) i_prdProperty;
+            String name = prdEnvProperty.getPRDName();
+            res = new BooleanPropertyDefinition(name, ValueGeneratorFactory.createRandomBoolean());
+        }
+        else if( i_prdProperty instanceof PRDProperty) {
+            PRDProperty prdProperty = (PRDProperty) i_prdProperty;
+            PRDValue prdValue = prdProperty.getPRDValue();
+            String name = prdProperty.getPRDName();
+            if(prdValue.isRandomInitialize()) {
+                res = new BooleanPropertyDefinition(name, ValueGeneratorFactory.createRandomBoolean());
+            }
+            else {
+                res = new BooleanPropertyDefinition(name, ValueGeneratorFactory.createFixed(PropertyType.BOOLEAN.convert(prdValue.getInit())));
+            }
+        }
+        if(res == null) {
+            throw new IllegalArgumentException(i_prdProperty.toString() + "is not expected type");
+        }
+        return res;
     }
-    private PropertyDefinition createFloatPropertyDefinition(PRDEnvProperty prdEnvProperty) {
-        Float from = PropertyType.FLOAT.convert(prdEnvProperty.getPRDRange().getFrom());
-        Float to = PropertyType.FLOAT.convert(prdEnvProperty.getPRDRange().getTo());
-        String name = prdEnvProperty.getPRDName();
-        return new FloatPropertyDefinition(name, ValueGeneratorFactory.createRandomFloat(from, to));
+
+
+    private PropertyDefinition createFloatPropertyDefinition(Object i_prdProperty) {
+        PropertyDefinition res = null;
+        if(i_prdProperty instanceof PRDEnvProperty) {
+            PRDEnvProperty prdEnvProperty = (PRDEnvProperty) i_prdProperty;
+            Float from = PropertyType.FLOAT.convert(prdEnvProperty.getPRDRange().getFrom());
+            Float to = PropertyType.FLOAT.convert(prdEnvProperty.getPRDRange().getTo());
+            String name = prdEnvProperty.getPRDName();
+            res = new FloatPropertyDefinition(name, ValueGeneratorFactory.createRandomFloat(from, to));
+        }
+        else if( i_prdProperty instanceof PRDProperty) {
+            PRDProperty prdProperty = (PRDProperty) i_prdProperty;
+            PRDValue prdValue = prdProperty.getPRDValue();
+            String name = prdProperty.getPRDName();
+            Float from = PropertyType.FLOAT.convert(prdProperty.getPRDRange().getFrom());
+            Float to = PropertyType.FLOAT.convert(prdProperty.getPRDRange().getTo());
+            if(prdValue.isRandomInitialize()) {
+                res = new FloatPropertyDefinition(name, ValueGeneratorFactory.createRandomFloat(from,to));
+            }
+            else {
+                res = new FloatPropertyDefinition(name, ValueGeneratorFactory.createFixed(PropertyType.FLOAT.convert(prdValue.getInit())));
+            }
+        }
+        if(res == null) {
+            throw new IllegalArgumentException(i_prdProperty.toString() + "is not expected type");
+        }
+        return res;
     }
-    private PropertyDefinition createDecimalPropertyDefinition(PRDEnvProperty prdEnvProperty) {
-        Integer from = PropertyType.DECIMAL.convert(prdEnvProperty.getPRDRange().getFrom());
-        Integer to = PropertyType.DECIMAL.convert(prdEnvProperty.getPRDRange().getTo());
-        String name = prdEnvProperty.getPRDName();
-        return new IntegerPropertyDefinition(name, ValueGeneratorFactory.createRandomInteger(from, to));
+    private PropertyDefinition createDecimalPropertyDefinition(Object i_prdProperty) {
+        PropertyDefinition res = null;
+        if(i_prdProperty instanceof PRDEnvProperty) {
+            PRDEnvProperty prdEnvProperty = (PRDEnvProperty) i_prdProperty;
+            Integer from = PropertyType.DECIMAL.convert(prdEnvProperty.getPRDRange().getFrom());
+            Integer to = PropertyType.DECIMAL.convert(prdEnvProperty.getPRDRange().getTo());
+            String name = prdEnvProperty.getPRDName();
+            res = new IntegerPropertyDefinition(name, ValueGeneratorFactory.createRandomInteger(from, to));
+        }
+        else if( i_prdProperty instanceof PRDProperty) {
+            PRDProperty prdProperty = (PRDProperty) i_prdProperty;
+            PRDValue prdValue = prdProperty.getPRDValue();
+            String name = prdProperty.getPRDName();
+            Integer from = PropertyType.DECIMAL.convert(prdProperty.getPRDRange().getFrom());
+            Integer to = PropertyType.DECIMAL.convert(prdProperty.getPRDRange().getTo());
+            if(prdValue.isRandomInitialize()) {
+                res = new IntegerPropertyDefinition(name, ValueGeneratorFactory.createRandomInteger(from,to));
+            }
+            else {
+                res = new IntegerPropertyDefinition(name, ValueGeneratorFactory.createFixed(PropertyType.DECIMAL.convert(prdValue.getInit())));
+            }
+        }
+        if(res == null) {
+            throw new IllegalArgumentException(i_prdProperty.toString() + "is not expected type");
+        }
+        return res;
     }
 
     /**
@@ -124,6 +209,24 @@ public class ReaderImpl implements Reader {
         Map<String, EntityDefinition> entities = new HashMap<>();
         for (PRDEntity prdEntity: prdEntities.getPRDEntity()){
             EntityDefinition currEntity = new EntityDefinitionImpl(prdEntity.getName(), prdEntity.getPRDPopulation());
+            for (PRDProperty prdProperty : prdEntity.getPRDProperties().getPRDProperty()) {
+                switch (prdProperty.getType()) {
+                    case "decimal":
+                        currEntity.getProps().add(createDecimalPropertyDefinition(prdProperty));
+                        break;
+                    case "float":
+                        currEntity.getProps().add(createFloatPropertyDefinition(prdProperty));
+                        break;
+                    case "boolean":
+                        currEntity.getProps().add(createBooleanPropertyDefinition(prdProperty));
+                        break;
+                    case "string":
+                        currEntity.getProps().add(createStringPropertyDefinition(prdProperty));
+                        break;
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + prdProperty.getType());
+                }
+            }
             String entityName = prdEntity.getName();
             entities.put(entityName, currEntity);
         }
