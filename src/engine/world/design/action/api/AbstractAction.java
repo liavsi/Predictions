@@ -5,11 +5,11 @@ import engine.world.design.definition.entity.api.EntityDefinition;
 public abstract class AbstractAction implements Action {
 
     private final ActionType actionType;
-    private final EntityDefinition entityDefinition;
+    private final EntityDefinition mainEntity;
 
     protected AbstractAction(ActionType actionType, EntityDefinition entityDefinition) {
         this.actionType = actionType;
-        this.entityDefinition = entityDefinition;
+        this.mainEntity = entityDefinition;
     }
 
     @Override
@@ -19,6 +19,6 @@ public abstract class AbstractAction implements Action {
 
     @Override
     public EntityDefinition getContextEntity() {
-        return entityDefinition;
+        return mainEntity;
     }
 }

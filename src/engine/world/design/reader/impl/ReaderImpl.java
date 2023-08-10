@@ -1,6 +1,13 @@
 package engine.world.design.reader.impl;
 
-import engine.world.design.api.World;
+import engine.world.design.action.api.Action;
+import engine.world.design.action.api.ActionType;
+import engine.world.design.action.impl.DecreaseAction;
+import engine.world.design.action.impl.IncreaseAction;
+import engine.world.design.action.impl.KillAction;
+import engine.world.design.rule.Rule;
+import engine.world.design.rule.RuleImpl;
+import engine.world.design.world.api.World;
 import engine.world.design.definition.entity.api.EntityDefinition;
 import engine.world.design.definition.entity.impl.EntityDefinitionImpl;
 import engine.world.design.definition.environment.api.EnvVariablesManager;
@@ -12,11 +19,8 @@ import engine.world.design.definition.property.impl.FloatPropertyDefinition;
 import engine.world.design.definition.property.impl.IntegerPropertyDefinition;
 import engine.world.design.definition.property.impl.StringPropertyDefinition;
 import engine.world.design.definition.value.generator.api.ValueGeneratorFactory;
-import engine.world.design.execution.entity.Entity;
-import engine.world.design.impl.WorldImpl;
+import engine.world.design.world.impl.WorldImpl;
 import engine.world.design.reader.api.Reader;
-import engine.world.property.EnvironmentProperty;
-import engine.world.property.Property;
 import schema.generated.*;
 
 import javax.xml.bind.JAXBContext;
@@ -26,6 +30,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,11 +40,11 @@ public class ReaderImpl implements Reader {
     World createdWorld;
     PRDWorld prdWorld;
 
-    public ReaderImpl() {
-        createdWorld = new WorldImpl();
-    }
+
     @Override
+    // after this method The Instance has its own copy of World build from the XML
     public void readWorldFromXml(String XML_PATH, String JAXB_XML_PACKAGE_NAME) {
+        createdWorld = new WorldImpl();
         try {
             InputStream inputStream = new FileInputStream(new File(XML_PATH));
             prdWorld = deserializedFrom( JAXB_XML_PACKAGE_NAME, inputStream);
@@ -68,7 +73,50 @@ public class ReaderImpl implements Reader {
     }
 
     private void buildRulesFromPRD(PRDRules prdRules) {
+        List<Rule> ruleList = new ArrayList<>();
+        for (PRDRule prdRule: prdRules.getPRDRule()) {
+            Rule currRule = new RuleImpl(prdRule.getName());
+            for (PRDAction prdAction : prdRule.getPRDActions().getPRDAction()) {
+                switch (prdAction.getType()) {
+                    case("increase"):
+                        currRule.addAction(createIncreaseOrDecreaseAction(prdAction, ActionType.INCREASE));
+                        break;
+                    case ("decrease"):
+                        currRule.addAction(createIncreaseOrDecreaseAction(prdAction, ActionType.DECREASE));
+                        break;
+                    case("kill"):
+                        currRule.addAction(createKillAction(prdAction));
+                        break;
+                }
+            }
+        }
+    }
 
+    private Action createKillAction(PRDAction prdAction) {
+        EntityDefinition mainEntity = createdWorld.getEntityDefinitionByName(prdAction.getEntity());
+        Action res = new KillAction(mainEntity);
+        return res;
+    }
+
+
+    private Action createIncreaseOrDecreaseAction(PRDAction prdAction, ActionType type) {
+        Action res = null ;
+        EntityDefinition mainEntity = createdWorld.getEntityDefinitionByName(prdAction.getEntity());
+        String propertyName = prdAction.getProperty();
+        String byExpression = prdAction.getBy();
+        if(type == ActionType.INCREASE) {
+            res = new IncreaseAction(mainEntity,propertyName,byExpression);
+        }
+        else if (type == ActionType.DECREASE) {
+            res = new DecreaseAction(mainEntity,propertyName,byExpression);
+        }
+        return res;
+    }
+
+
+    @Override
+    public World getWorld() {
+        return createdWorld;
     }
 
     /**
@@ -233,9 +281,7 @@ public class ReaderImpl implements Reader {
         createdWorld.setEntities(entities);
     }
 
-    private void readPRDEntity(PRDEntity prdEntity) {
 
-    }
 
     private void readPRDRules(PRDRules prdRules) {
 

@@ -1,7 +1,8 @@
-package engine.world.design.impl;
+package engine.world.design.world.impl;
 
+import com.sun.javaws.exceptions.InvalidArgumentException;
 import engine.SimulationOutcome;
-import engine.world.design.api.World;
+import engine.world.design.world.api.World;
 import engine.world.design.definition.entity.api.EntityDefinition;
 import engine.world.design.definition.environment.api.EnvVariablesManager;
 import engine.world.design.rule.Rule;
@@ -24,8 +25,11 @@ public class WorldImpl implements World {
     }
 
     @Override
-    public EntityDefinition getEntityDefinitionByName() {
-        return null;
+    public EntityDefinition getEntityDefinitionByName(String name) {
+        if(!nameToEntityDefinition.containsKey(name)) {
+            throw new IllegalArgumentException(name + "is not a name of entity");
+        }
+        return nameToEntityDefinition.get(name);
     }
 
     @Override
@@ -47,5 +51,6 @@ public class WorldImpl implements World {
     public void setEnvVariablesManager(EnvVariablesManager envVariablesManager) {
         this.envVariablesManager = envVariablesManager;
     }
+
 
 }

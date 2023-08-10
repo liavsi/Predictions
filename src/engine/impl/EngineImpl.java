@@ -2,8 +2,8 @@ package engine.impl;
 
 import engine.SimulationOutcome;
 import engine.api.Engine;
-import engine.world.design.api.World;
-import engine.world.design.impl.WorldImpl;
+import engine.world.design.world.api.World;
+import engine.world.design.world.impl.WorldImpl;
 import engine.world.design.reader.api.Reader;
 import engine.world.design.reader.impl.ReaderImpl;
 

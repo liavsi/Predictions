@@ -1,6 +1,7 @@
 package engine.world.design.rule;
 
 import engine.world.design.action.api.Action;
+import engine.world.design.rule.activation.api.Activation;
 
 import java.util.ArrayList;
 import java.util.List;

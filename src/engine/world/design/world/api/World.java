@@ -1,4 +1,4 @@
-package engine.world.design.api;
+package engine.world.design.world.api;
 
 import engine.SimulationOutcome;
 import engine.world.design.definition.entity.api.EntityDefinition;
@@ -9,7 +9,7 @@ import java.util.Map;
 public interface World {
 
 
-    EntityDefinition getEntityDefinitionByName();
+    EntityDefinition getEntityDefinitionByName(String name);
     EnvVariablesManager getEnvVariables();
     SimulationOutcome runSimulation();
 
