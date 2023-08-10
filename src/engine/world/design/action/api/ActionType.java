@@ -1,5 +1,5 @@
 package engine.world.design.action.api;
 
 public enum ActionType {
-    INCREASE, DECREASE, KILL
+    INCREASE, DECREASE,CALCULATION, CONDITION, SET,  KILL
 }
