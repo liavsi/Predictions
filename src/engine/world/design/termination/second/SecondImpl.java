@@ -8,7 +8,7 @@ public class SecondImpl implements Second {
     }
 
     @Override
-    public void setSeconds() {
+    public void setSeconds(Integer seconds) {
         this.seconds = seconds;
     }
 

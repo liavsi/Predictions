@@ -2,7 +2,7 @@ package engine.world.design.termination.second;
 
 public interface Second {
 
-    void setSeconds();
+    void setSeconds(Integer seconds);
 
     Integer getSeconds();
 }

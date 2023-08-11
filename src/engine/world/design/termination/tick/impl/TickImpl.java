@@ -10,6 +10,8 @@ public class TickImpl implements Tick {
         this.ticks = ticks;
     }
 
+
+
     @Override
     public Integer getTicks() {
         return ticks;
