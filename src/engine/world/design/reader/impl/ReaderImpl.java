@@ -7,6 +7,12 @@ import engine.world.design.action.impl.IncreaseAction;
 import engine.world.design.action.impl.KillAction;
 import engine.world.design.rule.Rule;
 import engine.world.design.rule.RuleImpl;
+import engine.world.design.termination.api.Termination;
+import engine.world.design.termination.impl.TerminationImpl;
+import engine.world.design.termination.second.Second;
+import engine.world.design.termination.second.SecondImpl;
+import engine.world.design.termination.tick.api.Tick;
+import engine.world.design.termination.tick.impl.TickImpl;
 import engine.world.design.world.api.World;
 import engine.world.design.definition.entity.api.EntityDefinition;
 import engine.world.design.definition.entity.impl.EntityDefinitionImpl;
@@ -62,7 +68,6 @@ public class ReaderImpl implements Reader {
     }
 
     private void readPRDWorld() {
-
         buildEntitiesFromPRD(prdWorld.getPRDEntities());
         buildEnvironmentFromPRD(prdWorld.getPRDEvironment());
         buildRulesFromPRD(prdWorld.getPRDRules());
@@ -70,7 +75,18 @@ public class ReaderImpl implements Reader {
     }
 
     private void buildTerminationFromPRD(PRDTermination prdTermination) {
-
+        TerminationImpl termination = new TerminationImpl();
+        for (Object prdTicksOrSeconds :prdTermination.getPRDByTicksOrPRDBySecond()) {
+            if(prdTicksOrSeconds instanceof PRDByTicks) {
+                Tick tick = new TickImpl(((PRDByTicks) prdTicksOrSeconds).getCount());
+                termination.setTicks(tick);
+            }
+            if(prdTicksOrSeconds instanceof PRDBySecond) {
+                Second second = new SecondImpl(((PRDBySecond) prdTicksOrSeconds).getCount());
+                termination.setSecondsToPast(second);
+            }
+        }
+        createdWorld.setTermination(termination);
     }
 
     private void buildRulesFromPRD(PRDRules prdRules) {
@@ -97,9 +113,14 @@ public class ReaderImpl implements Reader {
                     case("kill"):
                         currRule.addAction(createKillAction(prdAction));
                         break;
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + prdAction.getType());
                 }
             }
+            ruleList.add(currRule);
         }
+        createdWorld.setRules(ruleList);
+
     }
 
     private Action createSetAction(PRDAction prdAction) {
@@ -309,9 +330,7 @@ public class ReaderImpl implements Reader {
 
 
 
-    private void readPRDRules(PRDRules prdRules) {
 
-    }
 
 
     private void readPRDEnv(PRDEnvProperty prdEnvProperty) {

@@ -2,6 +2,7 @@ package engine.world.design.world.impl;
 
 import com.sun.javaws.exceptions.InvalidArgumentException;
 import engine.SimulationOutcome;
+import engine.world.design.termination.api.Termination;
 import engine.world.design.world.api.World;
 import engine.world.design.definition.entity.api.EntityDefinition;
 import engine.world.design.definition.environment.api.EnvVariablesManager;
@@ -15,6 +16,8 @@ public class WorldImpl implements World {
     private Map<String, EntityDefinition> nameToEntityDefinition;
     private EnvVariablesManager envVariablesManager;
     private List<Rule> rules;
+
+    private Termination termination;
 
 
 // TODO: 10/08/2023 List<Termination> terminationConditions;
@@ -52,5 +55,14 @@ public class WorldImpl implements World {
         this.envVariablesManager = envVariablesManager;
     }
 
+    @Override
+    public void setRules(List<Rule> ruleList) {
+        this.rules = ruleList;
+    }
 
+
+    @Override
+    public void setTermination(Termination termination) {
+        this.termination = termination;
+    }
 }
