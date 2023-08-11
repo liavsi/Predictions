@@ -38,8 +38,5 @@ public class DecreaseAction extends AbstractAction {
         // updating result on the property
         propertyInstance.updateValue(result);
     }
-    private boolean verifyNumericPropertyTYpe(PropertyInstance propertyValue) {
-        return
-                PropertyType.DECIMAL.equals(propertyValue.getPropertyDefinition().getType()) || PropertyType.FLOAT.equals(propertyValue.getPropertyDefinition().getType());
-    }
+
 }

@@ -50,6 +50,7 @@ public class ReaderImpl implements Reader {
             prdWorld = deserializedFrom( JAXB_XML_PACKAGE_NAME, inputStream);
             readPRDWorld();
         }catch(JAXBException | FileNotFoundException e){
+            // TODO: 11/08/2023 deal with this problem - file not found or not an XML file message
             e.printStackTrace();
         }
     }
@@ -84,12 +85,37 @@ public class ReaderImpl implements Reader {
                     case ("decrease"):
                         currRule.addAction(createIncreaseOrDecreaseAction(prdAction, ActionType.DECREASE));
                         break;
+                    case("calculation"):
+                        currRule.addAction(createcalCulationAction(prdAction));
+                        break;
+                    case("condition"):
+                        currRule.addAction(createConditionAction(prdAction));
+                        break;
+                    case("set"):
+                        currRule.addAction(createSetAction(prdAction));
+                        break;
                     case("kill"):
                         currRule.addAction(createKillAction(prdAction));
                         break;
                 }
             }
         }
+    }
+
+    private Action createSetAction(PRDAction prdAction) {
+        // TODO: 11/08/2023 implement method and class
+        return null;
+    }
+
+
+    private Action createConditionAction(PRDAction prdAction) {
+        // TODO: 11/08/2023 implement method  and class
+        return null;
+    }
+
+    private Action createcalCulationAction(PRDAction prdAction) {
+        // TODO: 11/08/2023 implement method  and class
+        return null;
     }
 
     private Action createKillAction(PRDAction prdAction) {

@@ -3,16 +3,29 @@ package engine.world.design.action.impl;
 import engine.world.design.action.api.AbstractAction;
 import engine.world.design.action.api.ActionType;
 import engine.world.design.definition.entity.api.EntityDefinition;
+import engine.world.design.definition.property.api.PropertyType;
 import engine.world.design.execution.context.Context;
+import engine.world.design.execution.property.PropertyInstance;
 
 public class SetAction extends AbstractAction {
-    // TODO: 10/08/2023 to implement this class 
-    protected SetAction(EntityDefinition entityDefinition) {
+
+    private String property;
+    private String value;
+    protected SetAction(EntityDefinition entityDefinition, String property, String value) {
         super(ActionType.SET, entityDefinition);
+        this.property = property;
+        this.value = value;
     }
 
     @Override
     public void invoke(Context context) {
-        
+        PropertyInstance propertyInstance = context.getPrimaryEntityInstance().getPropertyByName(property);
+
+        //Object res = Expression.evaluate(value)
+        // TODO: 11/08/2023 evaluate the expression
+        Object result = value;
+        // updating result on the property
+        propertyInstance.updateValue(result);
+
     }
 }

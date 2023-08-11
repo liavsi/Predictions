@@ -1,6 +1,8 @@
 package engine.world.design.action.api;
 
 import engine.world.design.definition.entity.api.EntityDefinition;
+import engine.world.design.definition.property.api.PropertyType;
+import engine.world.design.execution.property.PropertyInstance;
 
 public abstract class AbstractAction implements Action {
 
@@ -20,5 +22,10 @@ public abstract class AbstractAction implements Action {
     @Override
     public EntityDefinition getContextEntity() {
         return mainEntity;
+    }
+
+    protected boolean verifyNumericPropertyTYpe(PropertyInstance propertyValue) {
+        return
+                PropertyType.DECIMAL.equals(propertyValue.getPropertyDefinition().getType()) || PropertyType.FLOAT.equals(propertyValue.getPropertyDefinition().getType());
     }
 }

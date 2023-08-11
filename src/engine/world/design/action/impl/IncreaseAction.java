@@ -28,20 +28,23 @@ public class IncreaseAction extends AbstractAction {
             throw new IllegalArgumentException("increase action can't operate on a none number property [" + property);
         }
 
-        Integer v = PropertyType.DECIMAL.convert(propertyInstance.getValue());
+        if(PropertyType.DECIMAL.equals(propertyInstance.getPropertyDefinition().getType())){
+            Integer v = PropertyType.DECIMAL.convert(propertyInstance.getValue());
+            // TODO: 11/08/2023 evaluate the numeric expression
+            int x = 5;
+            // actual calculation
+            int result = x + v;
+            // updating result on the property
+            propertyInstance.updateValue(result);
+        }
+        else if(PropertyType.FLOAT.equals(propertyInstance.getPropertyDefinition().getType())) {
+            Float v = PropertyType.FLOAT.convert(propertyInstance.getValue());
+            Float x = 5f;
+            Float result = x + v;
+            propertyInstance.updateValue(result);
+        }
 
-        // something that evaluates expression to a number, say the result is 5...
-        int x = 5;
-
-        // actual calculation
-        int result = x + v;
-
-        // updating result on the property
-        propertyInstance.updateValue(result);
     }
 
-    private boolean verifyNumericPropertyTYpe(PropertyInstance propertyValue) {
-        return
-                PropertyType.DECIMAL.equals(propertyValue.getPropertyDefinition().getType()) || PropertyType.FLOAT.equals(propertyValue.getPropertyDefinition().getType());
-    }
+
 }
