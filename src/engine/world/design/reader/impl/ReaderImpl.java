@@ -52,14 +52,33 @@ public class ReaderImpl implements Reader {
     public void readWorldFromXml(String XML_PATH, String JAXB_XML_PACKAGE_NAME) {
         createdWorld = new WorldImpl();
         try {
-            InputStream inputStream = new FileInputStream(new File(XML_PATH));
-            prdWorld = deserializedFrom( JAXB_XML_PACKAGE_NAME, inputStream);
-            readPRDWorld();
-        }catch(JAXBException | FileNotFoundException e){
-            // TODO: 11/08/2023 deal with this problem - file not found or not an XML file message
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(XML_PATH);
+            if (inputStream != null) {
+                prdWorld = deserializedFrom(JAXB_XML_PACKAGE_NAME, inputStream);
+                readPRDWorld();
+            } else {
+                // Handle the case when the resource is not found
+                System.err.println("XML resource not found: " + XML_PATH);
+            }
+        } catch (JAXBException e) {
+            // Handle JAXB exception
             e.printStackTrace();
         }
     }
+
+//    @Override
+//    // after this method The Instance has its own copy of World build from the XML
+//    public void readWorldFromXml(String XML_PATH, String JAXB_XML_PACKAGE_NAME) {
+//        createdWorld = new WorldImpl();
+//        try {
+//            InputStream inputStream = new FileInputStream(new File(XML_PATH));
+//            prdWorld = deserializedFrom( JAXB_XML_PACKAGE_NAME, inputStream);
+//            readPRDWorld();
+//        }catch(JAXBException | FileNotFoundException e){
+//            // TODO: 11/08/2023 deal with this problem - file not found or not an XML file message
+//            e.printStackTrace();
+//        }
+//    }
 
     private static PRDWorld deserializedFrom(String JAXB_XML_PACKAGE_NAME, InputStream in)throws JAXBException {
         JAXBContext jc = JAXBContext.newInstance(JAXB_XML_PACKAGE_NAME);
@@ -84,6 +103,9 @@ public class ReaderImpl implements Reader {
             if(prdTicksOrSeconds instanceof PRDBySecond) {
                 Second second = new SecondImpl(((PRDBySecond) prdTicksOrSeconds).getCount());
                 termination.setSecondsToPast(second);
+            }
+            else {
+                throw new RuntimeException(prdTicksOrSeconds.toString() + "is of unexpected Class");
             }
         }
         createdWorld.setTermination(termination);

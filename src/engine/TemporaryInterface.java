@@ -17,7 +17,7 @@ public class TemporaryInterface {
     public static void main(String[] args) {
         EngineImpl currEngine = new EngineImpl();
         currEngine.readWorldFromXml(XML_FILE_PATH, JAXB_XML_PACKAGE_NAME);
-
+        System.out.println(currEngine.toString());
         //showSimulationData(currEngine.createNewSimulation());
     }
 
