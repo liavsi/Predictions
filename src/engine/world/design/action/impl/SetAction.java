@@ -6,6 +6,7 @@ import engine.world.design.definition.entity.api.EntityDefinition;
 import engine.world.design.definition.property.api.PropertyType;
 import engine.world.design.execution.context.Context;
 import engine.world.design.execution.property.PropertyInstance;
+import engine.world.utils.Expression;
 
 public class SetAction extends AbstractAction {
 
@@ -20,6 +21,10 @@ public class SetAction extends AbstractAction {
     @Override
     public void invoke(Context context) {
         PropertyInstance propertyInstance = context.getPrimaryEntityInstance().getPropertyByName(property);
+        if(PropertyType.FLOAT ==propertyInstance.getPropertyDefinition().getType()) {
+//            Expression.FLOAT.evaluate(value);
+        }
+
 
         //Object res = Expression.evaluate(value)
         // TODO: 11/08/2023 evaluate the expression
