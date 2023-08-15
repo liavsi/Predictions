@@ -6,6 +6,7 @@ import engine.world.design.definition.entity.api.EntityDefinition;
 import engine.world.design.definition.property.api.PropertyType;
 import engine.world.design.execution.context.Context;
 import engine.world.design.execution.property.PropertyInstance;
+import engine.world.design.expression.ExpressionType;
 import engine.world.utils.Expression;
 
 public class SetAction extends AbstractAction {
@@ -21,16 +22,23 @@ public class SetAction extends AbstractAction {
     @Override
     public void invoke(Context context) {
         PropertyInstance propertyInstance = context.getPrimaryEntityInstance().getPropertyByName(property);
-        if(PropertyType.FLOAT ==propertyInstance.getPropertyDefinition().getType()) {
-//            Expression.FLOAT.evaluate(value);
+        Object type = propertyInstance.getPropertyDefinition().getType();
+        if(PropertyType.DECIMAL.equals(type)){
+            int result = ExpressionType.DECIMAL.evaluate(value,context);
+            propertyInstance.updateValue(result);
         }
-
-
-        //Object res = Expression.evaluate(value)
-        // TODO: 11/08/2023 evaluate the expression
-        Object result = value;
-        // updating result on the property
-        propertyInstance.updateValue(result);
+        else if(PropertyType.FLOAT.equals(type)){
+            float result = ExpressionType.FLOAT.evaluate(value,context);
+            propertyInstance.updateValue(result);
+        }
+        else if(PropertyType.STRING.equals(type)){
+            String result = ExpressionType.STRING.evaluate(value,context);
+            propertyInstance.updateValue(result);
+        }
+        else if(PropertyType.BOOLEAN.equals(type)) {
+            Object result = ExpressionType.BOOLEAN.evaluate(value,context); // TODO: 15/08/2023  
+            propertyInstance.updateValue(result);
+        }
 
     }
 }

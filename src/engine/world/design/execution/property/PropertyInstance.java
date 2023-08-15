@@ -7,4 +7,5 @@ public interface PropertyInstance {
     Object getValue();
     void updateValue(Object val);
 
+
 }

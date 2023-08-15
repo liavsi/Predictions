@@ -6,6 +6,7 @@ import engine.world.design.definition.entity.api.EntityDefinition;
 import engine.world.design.definition.property.api.PropertyType;
 import engine.world.design.execution.context.Context;
 import engine.world.design.execution.property.PropertyInstance;
+import engine.world.design.expression.ExpressionType;
 
 public class DecreaseAction extends AbstractAction {
 
@@ -21,22 +22,23 @@ public class DecreaseAction extends AbstractAction {
     @Override
     public void invoke(Context context) {
         PropertyInstance propertyInstance = context.getPrimaryEntityInstance().getPropertyByName(property);
-        if (!verifyNumericPropertyTYpe(propertyInstance)) {
+        if (!verifyNumericPropertyType(propertyInstance)) {
             throw new IllegalArgumentException("increase action can't operate on a none number property [" + property);
         }
-
-        Integer v = PropertyType.DECIMAL.convert(propertyInstance.getValue());
-
-
-        // TODO: 10/08/2023 use expression to get the Integer/Float by value from the string
-        // something that evaluates expression to a number, say the result is 5...
-        int x = 5;
-
-        // actual calculation
-        int result = x - v;
-
-        // updating result on the property
-        propertyInstance.updateValue(result);
+        if(PropertyType.DECIMAL.equals(propertyInstance.getPropertyDefinition().getType())){
+            Integer v = PropertyType.DECIMAL.convert(propertyInstance.getValue());
+            int x = ExpressionType.DECIMAL.evaluate(byExpression,context);
+            // actual calculation
+            int result = v-x;
+            propertyInstance.updateValue(result);
+        }
+        else if(PropertyType.FLOAT.equals(propertyInstance.getPropertyDefinition().getType())){
+            Float v = PropertyType.FLOAT.convert(propertyInstance.getValue());
+            float x = ExpressionType.FLOAT.evaluate(byExpression,context);
+            // actual calculation
+            float result = v-x;
+            propertyInstance.updateValue(result);
+        }
     }
 
 }

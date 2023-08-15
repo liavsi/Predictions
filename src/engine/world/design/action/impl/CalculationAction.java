@@ -4,8 +4,10 @@ import engine.world.design.action.api.AbstractAction;
 import engine.world.design.action.api.ActionType;
 import engine.world.design.action.calculation.CalculationType;
 import engine.world.design.definition.entity.api.EntityDefinition;
+import engine.world.design.definition.property.api.PropertyType;
 import engine.world.design.execution.context.Context;
 import engine.world.design.execution.property.PropertyInstance;
+import engine.world.design.expression.ExpressionType;
 
 public class CalculationAction extends AbstractAction {
 
@@ -24,14 +26,34 @@ public class CalculationAction extends AbstractAction {
     @Override
     public void invoke(Context context) {
         PropertyInstance propertyInstance = context.getPrimaryEntityInstance().getPropertyByName(property);
-        if (!verifyNumericPropertyTYpe(propertyInstance)) {
+        if (!verifyNumericPropertyType(propertyInstance)) {
             throw new IllegalArgumentException("increase action can't operate on a none number property [" + property);
         }
-
-        // TODO: 11/08/2023 res is always null
-        Float res = null;
-//        Float res = calculationType.evaluate(arg1, arg2);
-        propertyInstance.updateValue(res);
-
+        if(PropertyType.DECIMAL.equals(propertyInstance.getPropertyDefinition().getType()))
+        {
+            int result = 0;
+            int num1 = ExpressionType.DECIMAL.evaluate(arg1,context);
+            int num2 = ExpressionType.DECIMAL.evaluate(arg2,context);
+            if (CalculationType.MULTIPLY.equals(calculationType)){
+                result = num1*num2;
+            }
+            else if (CalculationType.DIVIDE.equals(calculationType)){
+                result = num1/num2;
+            }
+            propertyInstance.updateValue(result);
+        }
+        else if(PropertyType.FLOAT.equals(propertyInstance.getPropertyDefinition().getType()))
+        {
+            float result = 0;
+            float num1 = ExpressionType.FLOAT.evaluate(arg1,context);
+            float num2 = ExpressionType.FLOAT.evaluate(arg2,context);
+            if (CalculationType.MULTIPLY.equals(calculationType)){
+                result = num1*num2;
+            }
+            else if (CalculationType.DIVIDE.equals(calculationType)){
+                result = num1/num2;
+            }
+            propertyInstance.updateValue(result);
+        }
     }
 }
