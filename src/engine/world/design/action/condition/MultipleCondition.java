@@ -13,10 +13,8 @@ public class MultipleCondition extends AbstractCondition{
 
     private List<Condition> conditions;
     String logical;
-    private List<Action> thanActions;
-    private List<Action> elseActions;
 
-    protected MultipleCondition(ActionType actionType, EntityDefinition entityDefinition) {// TODO: 15/08/2023
+    public MultipleCondition(ActionType actionType, EntityDefinition entityDefinition) {// TODO: 15/08/2023
         super(actionType, entityDefinition);
     }
 

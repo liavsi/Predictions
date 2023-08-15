@@ -17,8 +17,6 @@ public class SingleCondition extends AbstractCondition{
     private Operator operaton1;
     private String operator;
     private String value;
-    private List<Action> thanActions;
-    private List<Action> elseActions;
 
     protected SingleCondition(ActionType actionType, EntityDefinition entityDefinition, EntityInstanceImpl entityInstance) {// TODO: 15/08/2023
         super(actionType, entityDefinition);
@@ -26,56 +24,61 @@ public class SingleCondition extends AbstractCondition{
     }
 
     @Override
-    public boolean evaluate() {
-        PropertyInstance propertyInstance =  entityInstance.getPropertyByName(property);
-        return operaton1.runOperator(propertyInstance,value);
-//        switch (operator){
-//            case ("="):{
-//               if(propertyInstance.getValue() == propertyInstance.getPropertyDefinition().getType().convert(value)){
-//                   return true;
-//               }
-//               else {
-//                   return false;
-//               }
-//            }
-//            case("!="):{
-//                if(propertyInstance.getValue() != propertyInstance.getPropertyDefinition().getType().convert(value)){
-//                    return true;
-//                }
-//                else {
-//                    return false;
-//                }
-//            }
-//            case("Bt"):{
-//                if(verifyNumericPropertyTYpe(propertyInstance)){
-//                    if((float) propertyInstance.getValue() > (float) propertyInstance.getPropertyDefinition().getType().convert(value)){
-//                        return true;
-//                    }
-//                    else {
-//                        return false;
-//                    }
-//                }
-//                else {
-//                    throw new RuntimeException("Bt can't be done on non numeric values");
-//                }
-//            }
-//            case ("Lt"):{
-//                if(verifyNumericPropertyTYpe(propertyInstance)){
-//                    if((float) propertyInstance.getValue() < (float) propertyInstance.getPropertyDefinition().getType().convert(value)){
-//                        return true;
-//                    }
-//                    else {
-//                        return false;
-//                    }
-//                }
-//                else{
-//                    throw new RuntimeException("Lt can't be done on non numeric values");
-//                }
-//            }
-//            default:{
-//                throw new RuntimeException("Invalid operator");
-//            }
-//        }
+    public boolean evaluate(Context context) {
+        PropertyInstance propertyInstance =  context.getPrimaryEntityInstance().getPropertyByName(property);
+        //return operaton1.runOperator(propertyInstance,value);
+
+        PropertyType propertyType = propertyInstance.getPropertyDefinition().getType();
+        Object realValue = ExpressionType.valueOf(propertyType.toString()).evaluate(value, context);
+        // TODO: 15/08/2023  boolean res = false;
+        switch (operator){
+            case ("="):{
+               if(propertyInstance.getValue() == propertyType.convert(realValue)){
+                   return true;
+               }
+               else {
+                   return false;
+               }
+            //   return (operaton1.runOperator1(propertyInstance.getValue(),propertyInstance.getPropertyDefinition().getType().convert(value)));
+            }
+            case("!="):{
+                if(propertyInstance.getValue() != propertyType.convert(realValue)){
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+            case("Bt"):{
+                if(verifyNumericPropertyType(propertyInstance)){
+                    if((float) propertyInstance.getValue() > (float) propertyType.convert(realValue)){
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                }
+                else {
+                    throw new RuntimeException("Bt can't be done on non numeric values");
+                }
+            }
+            case ("Lt"):{
+                if(verifyNumericPropertyType(propertyInstance)){
+                    if((float) propertyInstance.getValue() < (float) propertyType.convert(realValue)){
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                }
+                else{
+                    throw new RuntimeException("Lt can't be done on non numeric values");
+                }
+            }
+            default:{
+                throw new RuntimeException("Invalid operator");
+            }
+        }
     }
 
 }

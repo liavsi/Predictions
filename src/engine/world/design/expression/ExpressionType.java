@@ -73,8 +73,8 @@ public enum ExpressionType {
             }
             else{
                 try{
-                    int floatFreeVal = Integer.parseInt(expression);
-                    return floatFreeVal;
+                    int freeVal = Integer.parseInt(expression);
+                    return freeVal;
                 }
                 catch (NumberFormatException e2){
                     //"Unable to convert the string to float"
@@ -85,7 +85,7 @@ public enum ExpressionType {
     }, 
     STRING{
         @Override
-        public String evaluate(String expression, Context context) {
+        public String evaluate(String expression, Context context) {// TODO: 15/08/2023
             return null;
         }
     },
