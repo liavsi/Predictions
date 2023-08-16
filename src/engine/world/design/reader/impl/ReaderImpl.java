@@ -3,6 +3,7 @@ package engine.world.design.reader.impl;
 import engine.world.design.action.api.Action;
 import engine.world.design.action.api.ActionType;
 import engine.world.design.action.condition.AbstractCondition;
+import engine.world.design.action.condition.MultipleCondition;
 import engine.world.design.action.condition.SingleCondition;
 import engine.world.design.action.impl.DecreaseAction;
 import engine.world.design.action.impl.IncreaseAction;
@@ -173,17 +174,27 @@ public class ReaderImpl implements Reader {
                 res = new SingleCondition(mainEntity, entity, property,value,operator);
                 break;
             case "multiple":
+                String logical = prdAction.getPRDCondition().getLogical();
+                if(logical != "or" && logical != "and"){
+                    throw new RuntimeException("invalid logical value");
+                }
+                MultipleCondition multipleCondition = new MultipleCondition(mainEntity,logical);
+                for (PRDCondition prdCondition: prdAction.getPRDCondition().getPRDCondition()){
+                    multipleCondition.addCondition(createConditionAction(prdCondition));
+                }
                 break;
             default:
                 throw new IllegalArgumentException(singularity + "is not a valid Condition Singularity");
         }
-        for (PRDAction action: prdAction.getPRDThen().getPRDAction()){
-            res.getThanActions().add(c
+        for (PRDAction prdAction1: prdAction.getPRDThen().getPRDAction()){
+            res.getThanActions().add(buildActionFromPRD(prdAction1));
+        }
+        for (PRDAction prdAction1: prdAction.getPRDElse().getPRDAction()){
+            res.getElseActions().add(buildActionFromPRD(prdAction1));
         }
         List<PRDCondition> prdCondition = prdAction.getPRDCondition().getPRDCondition();
 
         return res;
-        return null;
     }
 
     private Action createcalCulationAction(PRDAction prdAction) {
