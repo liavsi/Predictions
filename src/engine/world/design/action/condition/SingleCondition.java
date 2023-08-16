@@ -13,16 +13,14 @@ import engine.world.design.expression.ExpressionType;
 
 import java.util.List;
 
-public class SingleCondition extends AbstractCondition{
-
+public class SingleCondition implements Condition{
     private String property;
     private EntityDefinition entity;
     //private Operator operaton1;
     private String operator;
     private String value;
 
-    public SingleCondition(EntityDefinition entityDefinition, EntityDefinition entity, String property, String value, String operator) {// TODO: 15/08/2023
-        super(ActionType.CONDITION, entityDefinition);
+    public SingleCondition(EntityDefinition entity, String property, String value, String operator) {// TODO: 15/08/2023
         this.property = property;
         this.value = value;
         this.entity = entity;
@@ -86,5 +84,8 @@ public class SingleCondition extends AbstractCondition{
             }
         }
     }
-
+    public boolean verifyNumericPropertyType(PropertyInstance propertyValue) {
+        return
+                PropertyType.DECIMAL.equals(propertyValue.getPropertyDefinition().getType()) || PropertyType.FLOAT.equals(propertyValue.getPropertyDefinition().getType());
+    }
 }

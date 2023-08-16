@@ -40,4 +40,7 @@ public abstract class AbstractCondition extends AbstractAction implements Condit
             }
         }
     }
+
+    public static class ConditionAction {
+    }
 }
