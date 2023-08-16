@@ -113,36 +113,42 @@ public class ReaderImpl implements Reader {
 
     private void buildRulesFromPRD(PRDRules prdRules) {
         List<Rule> ruleList = new ArrayList<>();
+        Action action;
         for (PRDRule prdRule: prdRules.getPRDRule()) {
             Rule currRule = new RuleImpl(prdRule.getName());
             for (PRDAction prdAction : prdRule.getPRDActions().getPRDAction()) {
-                switch (prdAction.getType()) {
-                    case("increase"):
-                        currRule.addAction(createIncreaseOrDecreaseAction(prdAction, ActionType.INCREASE));
-                        break;
-                    case ("decrease"):
-                        currRule.addAction(createIncreaseOrDecreaseAction(prdAction, ActionType.DECREASE));
-                        break;
-                    case("calculation"):
-                        currRule.addAction(createcalCulationAction(prdAction));
-                        break;
-                    case("condition"):
-                        currRule.addAction(createConditionAction(prdAction));
-                        break;
-                    case("set"):
-                        currRule.addAction(createSetAction(prdAction));
-                        break;
-                    case("kill"):
-                        currRule.addAction(createKillAction(prdAction));
-                        break;
-                    default:
-                        throw new IllegalStateException("Unexpected value: " + prdAction.getType());
-                }
+                currRule.addAction(buildActionFromPRD(prdAction));
             }
             ruleList.add(currRule);
         }
         createdWorld.setRules(ruleList);
 
+    }
+    private Action buildActionFromPRD(PRDAction prdAction) {
+        Action res;
+        switch (prdAction.getType()) {
+            case ("increase"):
+                res = createIncreaseOrDecreaseAction(prdAction, ActionType.INCREASE);
+                break;
+            case ("decrease"):
+                res = createIncreaseOrDecreaseAction(prdAction, ActionType.DECREASE);
+                break;
+            case ("calculation"):
+                res = createcalCulationAction(prdAction);
+                break;
+            case ("condition"):
+                res = createConditionAction(prdAction);
+                break;
+            case ("set"):
+                res = createSetAction(prdAction);
+                break;
+            case ("kill"):
+                res = createKillAction(prdAction);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + prdAction.getType());
+        }
+        return res;
     }
 
     private Action createSetAction(PRDAction prdAction) {
