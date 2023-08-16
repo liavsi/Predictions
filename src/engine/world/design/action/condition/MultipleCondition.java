@@ -19,22 +19,14 @@ public class MultipleCondition extends AbstractCondition{
     }
 
     @Override
-    public boolean evaluate() {
-        if (Objects.equals(logical, "Or")){
-            for(Condition condition: conditions){ // TODO: 15/08/2023
-                if(condition.evaluate()){
-                    return true;
-                }
-            }
-            return false;
+    public boolean evaluate(Context context) {
+        if (logical.equals("Or")){
+            return conditions.stream().
+                    anyMatch(condition -> condition.evaluate(context));
         }
-        else if(Objects.equals(logical,"And")){
-            for(Condition condition: conditions){ // TODO: 15/08/2023
-                if(!condition.evaluate()){
-                    return false;
-                }
-            }
-            return true;
+        else if(logical.equals("And")){
+            return conditions.stream().
+                    allMatch(condition -> condition.evaluate(context));
         }
         else {
             throw new RuntimeException("invalid logical sign");

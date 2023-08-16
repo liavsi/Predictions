@@ -7,7 +7,7 @@ public enum Operator {
     EQUAL{
         @Override
         public boolean runOperator(PropertyInstance propertyInstance, String value) {
-            if(propertyInstance.getValue() == propertyInstance.getPropertyDefinition().getType().convert(value)){
+            if (propertyInstance.getValue() == propertyInstance.getPropertyDefinition().getType().convert(value)){
                 return true;
             }
             else {

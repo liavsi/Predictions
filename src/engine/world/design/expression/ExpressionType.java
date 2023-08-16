@@ -1,6 +1,7 @@
 package engine.world.design.expression;
 
 import engine.world.design.definition.property.api.PropertyType;
+import engine.world.design.definition.value.generator.random.impl.numeric.RandomIntegerGenerator;
 import engine.world.design.execution.context.Context;
 
 import java.util.Random;
@@ -76,7 +77,7 @@ public enum ExpressionType {
                     int freeVal = Integer.parseInt(expression);
                     return freeVal;
                 }
-                catch (NumberFormatException e2){
+                catch (NumberFormatException e2) {
                     //"Unable to convert the string to float"
                 }
             }
@@ -91,7 +92,7 @@ public enum ExpressionType {
     },
     BOOLEAN{
         @Override
-        public Object evaluate(String expression, Context context) { // TODO: 15/08/2023  
+        public Boolean evaluate(String expression, Context context) { // TODO: 15/08/2023
             return false;
         }
     };

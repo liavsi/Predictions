@@ -5,6 +5,6 @@ import engine.world.design.execution.context.Context;
 
 public interface Condition {
 
-    public boolean evaluate();
+    public boolean evaluate(Context context);
 
 }

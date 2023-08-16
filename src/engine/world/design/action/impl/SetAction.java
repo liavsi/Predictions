@@ -36,7 +36,7 @@ public class SetAction extends AbstractAction {
             propertyInstance.updateValue(result);
         }
         else if(PropertyType.BOOLEAN.equals(type)) {
-            Object result = ExpressionType.BOOLEAN.evaluate(value,context); // TODO: 15/08/2023  
+            boolean result = ExpressionType.BOOLEAN.evaluate(value,context);
             propertyInstance.updateValue(result);
         }
 

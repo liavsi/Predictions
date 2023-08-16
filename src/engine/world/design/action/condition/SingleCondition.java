@@ -4,23 +4,29 @@ import engine.world.design.action.api.AbstractAction;
 import engine.world.design.action.api.Action;
 import engine.world.design.action.api.ActionType;
 import engine.world.design.definition.entity.api.EntityDefinition;
+import engine.world.design.definition.property.api.PropertyType;
 import engine.world.design.execution.context.Context;
+import engine.world.design.execution.context.ContextImpl;
 import engine.world.design.execution.entity.impl.EntityInstanceImpl;
 import engine.world.design.execution.property.PropertyInstance;
+import engine.world.design.expression.ExpressionType;
 
 import java.util.List;
 
 public class SingleCondition extends AbstractCondition{
 
-    private EntityInstanceImpl entityInstance;
     private String property;
-    private Operator operaton1;
+    private EntityDefinition entity;
+    //private Operator operaton1;
     private String operator;
     private String value;
 
-    protected SingleCondition(ActionType actionType, EntityDefinition entityDefinition, EntityInstanceImpl entityInstance) {// TODO: 15/08/2023
-        super(actionType, entityDefinition);
-        this.entityInstance = entityInstance;
+    public SingleCondition(EntityDefinition entityDefinition, EntityDefinition entity, String property, String value, String operator) {// TODO: 15/08/2023
+        super(ActionType.CONDITION, entityDefinition);
+        this.property = property;
+        this.value = value;
+        this.entity = entity;
+        this.operator = operator;
     }
 
     @Override

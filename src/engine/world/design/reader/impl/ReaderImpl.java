@@ -2,9 +2,12 @@ package engine.world.design.reader.impl;
 
 import engine.world.design.action.api.Action;
 import engine.world.design.action.api.ActionType;
+import engine.world.design.action.condition.AbstractCondition;
+import engine.world.design.action.condition.SingleCondition;
 import engine.world.design.action.impl.DecreaseAction;
 import engine.world.design.action.impl.IncreaseAction;
 import engine.world.design.action.impl.KillAction;
+import engine.world.design.execution.entity.manager.EntityInstanceManager;
 import engine.world.design.rule.Rule;
 import engine.world.design.rule.RuleImpl;
 import engine.world.design.termination.api.Termination;
@@ -158,7 +161,28 @@ public class ReaderImpl implements Reader {
 
 
     private Action createConditionAction(PRDAction prdAction) {
-        // TODO: 11/08/2023 implement method  and class
+        AbstractCondition res = null;
+        EntityDefinition mainEntity = createdWorld.getEntityDefinitionByName(prdAction.getEntity());
+        String singularity = prdAction.getPRDCondition().getSingularity();
+        switch (singularity) {
+            case "single":
+                EntityDefinition entity =  createdWorld.getEntityDefinitionByName(prdAction.getPRDCondition().getEntity());
+                String property = prdAction.getPRDCondition().getProperty();
+                String value = prdAction.getPRDCondition().getValue();
+                String operator = prdAction.getPRDCondition().getOperator();
+                res = new SingleCondition(mainEntity, entity, property,value,operator);
+                break;
+            case "multiple":
+                break;
+            default:
+                throw new IllegalArgumentException(singularity + "is not a valid Condition Singularity");
+        }
+        for (PRDAction action: prdAction.getPRDThen().getPRDAction()){
+            res.getThanActions().add(c
+        }
+        List<PRDCondition> prdCondition = prdAction.getPRDCondition().getPRDCondition();
+
+        return res;
         return null;
     }
 

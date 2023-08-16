@@ -6,20 +6,30 @@ import engine.world.design.action.api.ActionType;
 import engine.world.design.definition.entity.api.EntityDefinition;
 import engine.world.design.execution.context.Context;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractCondition extends AbstractAction implements Condition{
+public abstract class AbstractCondition extends AbstractAction implements Condition {
 
     private List<Action> thanActions;
     private List<Action> elseActions;
 
     protected AbstractCondition(ActionType actionType, EntityDefinition entityDefinition) {// TODO: 15/08/2023  
         super(actionType, entityDefinition);
+        thanActions = new ArrayList<>();
+        elseActions = new ArrayList<>();
     }
 
+    public List<Action> getThanActions() {
+        return thanActions;
+    }
+
+    public List<Action> getElseActions() {
+        return elseActions;
+    }
     @Override
     public void invoke(Context context) {
-        if(evaluate()){
+        if(evaluate(context)){
             for (Action action: thanActions){ // TODO: 15/08/2023
                 action.invoke(context);
             }
